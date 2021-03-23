@@ -21,7 +21,7 @@ function Weather() {
       async function weatherData() {
         try {
           const res = await fetch(
-            `http://api.openweathermap.org/data/2.5/weather?q=${searchBtn}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
+            `https://api.openweathermap.org/data/2.5/weather?q=${searchBtn}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
           );
           const data = await res.json();
           const status = res.status;
