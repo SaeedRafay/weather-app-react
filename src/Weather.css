@@ -1,11 +1,36 @@
 .Weather {
-    margin: 2rem auto 0;
-    width: 400px;
+  margin: 2rem auto 0;
+  width: 400px;
 }
 
-.Weather .CityWeather {
-    text-align: left;
-    border: 1px solid #000;
-    padding: 0 1.5rem;
-    margin-bottom: 2rem;
+.Weather .cityWeather {
+  text-align: left;
+  border: 1px solid #000;
+  padding: 0 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.Weather .searchWeather {
+  margin-bottom: 2rem;
+}
+
+.Weather .searchWeather input,
+.Weather .searchWeather button {
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  margin: 0;
+  border: 1px solid #000;
+  border-radius: 0;
+  outline: 0;
+}
+
+.Weather .searchWeather input {
+  border-right: 0;
+}
+
+.Weather .searchWeather button {
+  border-left: 0;
+  padding: 0.5rem 0.7rem;
+  background-color: #333;
+  color: #fff;
 }

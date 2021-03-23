@@ -7,7 +7,7 @@ function CityWeather(props) {
   };
 
   return (
-    <div className="CityWeather">
+    <div className="cityWeather">
       <h3>
         {city.name}, {city.sys.country}
       </h3>
