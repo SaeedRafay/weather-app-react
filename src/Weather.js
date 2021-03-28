@@ -6,46 +6,43 @@ import "./Weather.css";
 
 function Weather() {
   const [cities, setCities] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchBtn, setSearchBtn] = useState("");
+  const [searchBtn, setSearchBtn] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [hasError, setError] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
-    setLoading(false);
-    setError(false);
-    setErrMsg("");
-    if (searchBtn !== "") {
+    if (searchBtn) {
       setLoading(true);
+      setErrMsg("");
+      let searchVal = document.getElementById("searchField").value;
       async function weatherData() {
         try {
           const res = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${searchBtn}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
+            `https://api.openweathermap.org/data/2.5/weather?q=${searchVal}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
           );
           const data = await res.json();
           const status = res.status;
           if (status === 200) {
             setCities((cities) => {
               if (cities.some((o) => o.name === data.name)) {
-                setError(true);
                 setErrMsg("City Already Exists");
                 return [...cities];
               } else {
                 return [data, ...cities];
               }
             });
+            document.getElementById("searchField").value = "";
+            console.log(status);
           }
           if (status === 404) {
-            setError(true);
-            setErrMsg("City Not Found");
+            setErrMsg(`City "${searchVal}" Not Found`);
           }
         } catch (err) {
-          setError(true);
           setErrMsg(err.message);
         }
 
         setLoading(false);
+        setSearchBtn(false);
       }
 
       weatherData();
@@ -54,20 +51,25 @@ function Weather() {
 
   return (
     <div className="Weather">
-      <SearchWeather
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        setSearchBtn={setSearchBtn}
-      />
+      <SearchWeather setSearchBtn={setSearchBtn} />
 
       {isLoading && <p>Loading...</p>}
 
-      {hasError && <p>Error: {errMsg}</p>}
+      {errMsg !== "" && <p>Error: {errMsg}</p>}
 
-      {cities.length === 0 && <p>Search by the name of a city</p>}
+      {cities.length === 0 && (
+        <p>Begin weather search by name of a city or place</p>
+      )}
 
       {cities.length > 0 &&
-        cities.map((city, index) => <CityWeather key={index} city={city} />)}
+        cities.map((city, index) => (
+          <CityWeather
+            key={index}
+            city={city}
+            cities={cities}
+            setCities={setCities}
+          />
+        ))}
     </div>
   );
 }
