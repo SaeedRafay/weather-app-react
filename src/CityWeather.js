@@ -1,9 +1,14 @@
 function CityWeather(props) {
-  const city = props.city;
+  const { city, cities, setCities } = props;
 
   const kelvinToCelcius = (temp) => {
     const kTemp = parseFloat(temp);
     return Math.round(kTemp - 273.15);
+  };
+
+  const deleteCity = async (cityToDelete) => {
+    const cityDeleted = await cities.filter(city => city !== cityToDelete);
+    setCities((cities) => cityDeleted);
   };
 
   return (
@@ -17,10 +22,11 @@ function CityWeather(props) {
         {city.weather[0].description}
       </p>
       <p>
-          min temp: {kelvinToCelcius(city.main.temp_min)}°C <br />
-          max temp: {kelvinToCelcius(city.main.temp_max)}°C <br />
-          location: {city.coord.lat}, {city.coord.lon}
+        min temp: {kelvinToCelcius(city.main.temp_min)}°C <br />
+        max temp: {kelvinToCelcius(city.main.temp_max)}°C <br />
+        location: {city.coord.lat}, {city.coord.lon}
       </p>
+      <button className="removeCity" onClick={() => deleteCity(city)}>&#10006;</button>
     </div>
   );
 }
