@@ -1,9 +1,8 @@
-function SearchWeather(props) {
-  const { setSearchBtn } = props;
+function SearchWeather({ searchValue, setSearchValue, fetchWeather }) {
   return (
     <div className="searchWeather">
-      <input type="text" id="searchField" placeholder="Search City" />
-      <button onClick={() => setSearchBtn(true)}>Search</button>
+      <input type="text" id="searchField" placeholder="Search City" value={searchValue} onChange={e => setSearchValue(e.target.value)} />
+      <button onClick={fetchWeather}>Search</button>
     </div>
   );
 }

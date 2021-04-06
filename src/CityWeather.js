@@ -1,5 +1,4 @@
-function CityWeather(props) {
-  const { city, cities, setCities } = props;
+function CityWeather({ city, cities, setCities }) {
 
   const kelvinToCelcius = (temp) => {
     const kTemp = parseFloat(temp);
