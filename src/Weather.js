@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-// import cities from "./city-weather.json";
+import React, { useState, useEffect } from "react";
 import CityWeather from "./CityWeather";
 import SearchWeather from "./SearchWeather";
 import "./Weather.css";
 
 function Weather() {
-  const [cities, setCities] = useState([]);
+  const storedCities = localStorage.getItem("cities")
+    ? JSON.parse(localStorage.getItem("cities"))
+    : [];
+  const [cities, setCities] = useState(storedCities);
   const [searchValue, setSearchValue] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("cities", JSON.stringify(cities));
+  }, [cities]);
 
   const fetchWeather = async () => {
     if (searchValue !== "") {
@@ -61,9 +67,9 @@ function Weather() {
       )}
 
       {cities.length > 0 &&
-        cities.map((city, index) => (
+        cities.map((city) => (
           <CityWeather
-            key={index}
+            key={city.id}
             city={city}
             cities={cities}
             setCities={setCities}

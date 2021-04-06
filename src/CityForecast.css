@@ -1,0 +1,12 @@
+.cityForecast {
+    width: 600px;
+    margin: 0 auto;
+}
+
+.cityForecast h2 {
+    text-align: center;
+}
+
+.cityForecast > p {
+    text-align: center;
+}
